@@ -1,3 +1,5 @@
+MAIN_ACTIVITY
+
 static ArrayList<String> notes = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
     @Override
@@ -96,5 +98,70 @@ static ArrayList<String> notes = new ArrayList<>();
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
     
+
+
+NoteEditorActivity
+
+int noteId;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_note);
+        EditText editText = findViewById(R.id.editText);
+
+        Intent intent = getIntent();
+        noteId = intent.getIntExtra("noteId", -1);
+        if (noteId != -1) {
+            editText.setText(MainActivity.notes.get(noteId));
+        }
+        else {
+            MainActivity.notes.add("Гений, ты не записал заметку!");
+            noteId = MainActivity.notes.size() - 1;
+            MainActivity.arrayAdapter.notifyDataSetChanged();
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    // add your code here
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    MainActivity.notes.set(noteId, String.valueOf(charSequence));
+                    MainActivity.arrayAdapter.notifyDataSetChanged();
+                    // Creating Object of SharedPreferences to store data in the phone
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
+                    HashSet<String> set = new HashSet(MainActivity.notes);
+                    sharedPreferences.edit().putStringSet("notes", set).apply();
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    // add your code here
+                }
+            });
+        }
+    }
     
+    XML
+    
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="368dp"
+        android:layout_height="708dp"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+        
+        
+Res - Directory(menu) - Menu Resources File(add_note_menu)
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add_note" android:title="Add note"></item>
+</menu>
     
