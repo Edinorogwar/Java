@@ -162,6 +162,6 @@ int noteId;
 Res - Directory(menu) - Menu Resources File(add_note_menu)
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add_note" android:title="Add note"></item>
+    <item android:id="@+id/add_note" android:title="Добавить заметку"></item>
 </menu>
     
