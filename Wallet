@@ -1,0 +1,206 @@
+MainActivity
+
+LinearLayout hiddenView;
+    CardView cardView;
+    ConstraintLayout fixed_layout;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.add_note_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.add_note) {
+            Intent intent = new Intent(getApplicationContext(), AddCard.class);
+            startActivity(intent);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        cardView = findViewById(R.id.base_cardview);
+        hiddenView = findViewById(R.id.hidden_view);
+        fixed_layout = findViewById(R.id.fixed_layout);
+
+        fixed_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // If the CardView is already expanded, set its visibility
+                //  to gone and change the expand less icon to expand more.
+                if (hiddenView.getVisibility() == View.VISIBLE) {
+
+                    // The transition of the hiddenView is carried out
+                    //  by the TransitionManager class.
+                    // Here we use an object of the AutoTransition
+                    // Class to create a default transition.
+                    TransitionManager.beginDelayedTransition(cardView,
+                            new AutoTransition());
+                    hiddenView.setVisibility(View.GONE);
+                    //arrow.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                }
+
+                // If the CardView is not expanded, set its visibility
+                // to visible and change the expand more icon to expand less.
+                else {
+
+                    TransitionManager.beginDelayedTransition(cardView,
+                            new AutoTransition());
+                    hiddenView.setVisibility(View.VISIBLE);
+                    //arrow.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+    }
+    
+    xml
+    
+    <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/base_cardview"
+        style="@style/Base.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/base_cardview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.511"
+            tools:layout_editor_absoluteX="-55dp">
+
+            <!--This is a ConstraintLayout for the fixed portion
+                of the CardView. The elements
+                that lie within the fixed portion of the CardView
+                can be constrained to this layout.-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fixed_layout"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+
+                <TextView
+                    android:id="@+id/heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Кошелек"
+                    android:textColor="#006600"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/fixed_layout"
+                    app:layout_constraintEnd_toEndOf="@+id/fixed_layout"
+                    app:layout_constraintHorizontal_bias="0.501"
+                    app:layout_constraintStart_toStartOf="@+id/fixed_layout"
+                    app:layout_constraintTop_toTopOf="@+id/fixed_layout" />
+
+                <!--This is ImageButton for the expansion icon.-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--The following is the expandable portion whose
+                visibility is initially set to 'gone'.
+                The parent LinearLayout contains 3 child LinearLayouts
+                that hold a subject name and an icon each.-->
+            <LinearLayout
+                android:id="@+id/hidden_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fixed_layout">
+
+                <!--Child LinearLayout 1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Database Management"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <!--Child LinearLayout 2-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Data Structures"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <!--Child LinearLayout 3-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:text="Operating Systems"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+AddCard
+
+пусто
+
+xaml 
+
+пусто
+
+menu - Directory - Resources file(add_note_menu)
