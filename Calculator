@@ -1,0 +1,461 @@
+MainActivity
+
+private Button zero;
+    private Button one;
+    private Button two;
+    private Button three;
+    private Button four;
+    private Button five;
+    private Button six;
+    private Button seven;
+    private Button eight;
+    private Button nine;
+    private Button add;
+    private Button sub;
+    private Button mul;
+    private Button equal;
+    private Button div;
+    private Button clear;
+    private TextView info;
+    private TextView result;
+    private final char ADDITION = '+';
+    private final char SUBTRACTION = '-';
+    private final char MULTIPLICATION = '*';
+    private final char DIVISION = '/';
+    private final char EQU = 0;
+    private double val1 = Double.NaN;
+    private double val2;
+    private char ACTION;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Elements();
+        SetOnClick();
+    }
+
+    private void Elements(){
+        zero = findViewById(R.id.button0);
+        one = findViewById(R.id.button1);
+        two = findViewById(R.id.button2);
+        three = findViewById(R.id.button3);
+        four = findViewById(R.id.button4);
+        five = findViewById(R.id.button5);
+        six = findViewById(R.id.button6);
+        seven = findViewById(R.id.button7);
+        eight = findViewById(R.id.button8);
+        nine = findViewById(R.id.button9);
+        add = findViewById(R.id.buttonPlus);
+        sub = findViewById(R.id.buttonMinus);
+        mul = findViewById(R.id.buttonMult);
+        div = findViewById(R.id.buttonDel);
+        clear = findViewById(R.id.buttonClear);
+        equal = findViewById(R.id.buttonEquals);
+        info = findViewById(R.id.textViewNumbers);
+        result = findViewById(R.id.textViewResult);
+    }
+    private void SetOnClick(){
+        zero.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "0");
+            }
+        });
+        one.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "1");
+            }
+        });
+        two.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "2");
+            }
+        });
+        three.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "3");
+            }
+        });
+        four.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "4");
+            }
+        });
+        five.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "5");
+            }
+        });
+        six.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "6");
+            }
+        });
+        seven.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "7");
+            }
+        });
+        eight.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "8");
+            }
+        });
+        nine.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                info.setText(info.getText().toString() + "9");
+            }
+        });
+        sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = SUBTRACTION;
+                result.setText(String.valueOf(val1) + "-");
+                info.setText(null);
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = ADDITION;
+                result.setText(String.valueOf(val1) + "+");
+                info.setText(null);
+            }
+        });
+
+        mul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = MULTIPLICATION;
+                result.setText(String.valueOf(val1) + "*");
+                info.setText(null);
+            }
+        });
+
+        div.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compute();
+                ACTION = DIVISION;
+                result.setText(String.valueOf(val1) + "/");
+                info.setText(null);
+            }
+        });
+        equal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (info.getText().toString() == ""){
+                    return;
+                }
+                compute();
+                ACTION = EQU;
+                result.setText(result.getText().toString() + String.valueOf(val2) + "=" + String.valueOf(val1));
+                info.setText(null);
+            }
+        });
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(info.getText().length() > 0){
+                    CharSequence name = info.getText().toString();
+                    info.setText(name.subSequence(0, name.length()-1));
+                }
+                else{
+                    val1 = Double.NaN;
+                    val2 = Double.NaN;
+                    info.setText(null);
+                    result.setText(null);
+                }
+            }
+        });
+    }
+    private void compute(){
+        if(!Double.isNaN(val1)){
+            val2 = Double.parseDouble(info.getText().toString());
+
+            switch(ACTION){
+                case ADDITION:
+                    val1 = val1 + val2;
+                    break;
+                case SUBTRACTION:
+                    val1 = val1 - val2;
+                    break;
+                case MULTIPLICATION:
+                    val1 = val1 * val2;
+                    break;
+                case DIVISION:
+                    val1 = val1 / val2;
+                    break;
+                case EQU:
+                    break;
+            }
+        }
+        else{
+            val1 = Double.parseDouble(info.getText().toString());
+        }
+    }
+
+Xml
+
+<Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="534dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="149dp"
+        android:text="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="478dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="205dp"
+        android:text="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="214dp"
+        android:layout_marginTop="421dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="262dp"
+        android:text="7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="421dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="262dp"
+        android:text="9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="307dp"
+        android:layout_marginTop="477dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="206dp"
+        android:text="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="478dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="205dp"
+        android:text="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonDel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="307dp"
+        android:layout_marginTop="420dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="263dp"
+        android:text="/"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="214dp"
+        android:layout_marginTop="534dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="149dp"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="214dp"
+        android:layout_marginTop="478dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="205dp"
+        android:text="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonEquals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="214dp"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="93dp"
+        android:text="="
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="93dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="301dp"
+        android:layout_marginBottom="93dp"
+        android:text="Clear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="307dp"
+        android:layout_marginTop="589dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="94dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="534dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="149dp"
+        android:text="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="307dp"
+        android:layout_marginTop="533dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="150dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="421dp"
+        android:layout_marginEnd="204dp"
+        android:layout_marginBottom="262dp"
+        android:text="8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <TextView
+        android:id="@+id/textViewNumbers"
+        android:layout_width="63dp"
+        android:layout_height="23dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.902"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.464" />
